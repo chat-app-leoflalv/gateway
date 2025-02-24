@@ -1,1 +1,0 @@
-/Users/leoflalv/Development/Projects/chat-app/api-launcher/gateway/target/debug/libgateway.rlib: /Users/leoflalv/Development/Projects/chat-app/api-launcher/gateway/src/lib.rs /Users/leoflalv/Development/Projects/chat-app/api-launcher/gateway/src/message/message_controller.rs /Users/leoflalv/Development/Projects/chat-app/api-launcher/gateway/src/message.rs

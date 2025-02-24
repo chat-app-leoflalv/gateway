@@ -1,4 +1,4 @@
-use gateway::setup;
+use gateway::{config::envs::Envs, setup};
 use tracing_subscriber::{layer::SubscriberExt, util::SubscriberInitExt};
 
 #[tokio::main]
@@ -12,9 +12,11 @@ async fn main() {
         .with(tracing_subscriber::fmt::layer())
         .init();
 
+    let envs = Envs::new();
+
     let app = setup();
 
-    let listener = tokio::net::TcpListener::bind("localhost:3000")
+    let listener = tokio::net::TcpListener::bind(format!("localhost:{}", envs.port))
         .await
         .unwrap();
     tracing::debug!("listening on {}", listener.local_addr().unwrap());
