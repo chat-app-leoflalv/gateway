@@ -2,14 +2,20 @@ use axum::{
     routing::{get, patch, post},
     Router,
 };
-use message_controller::MessageController;
 
 mod message_controller;
 
-pub fn setup_message(app: Router) {
-    let message_controller = MessageController::new();
+pub trait MessageRouterExt {
+    fn setup_message(self) -> Self;
+}
 
-    app.route("messages/{user_id}", get(message_controller.get_messages))
-        .route("message/send", post(message_controller.send_message))
-        .route("message/edit", patch(message_controller.edit_message));
+impl MessageRouterExt for Router {
+    fn setup_message(self) -> Self {
+        self.route("/messages/{user_id}", get(message_controller::get_messages))
+            .route(
+                "/message/{message_id}",
+                patch(message_controller::edit_message).delete(message_controller::delete_message),
+            )
+            .route("/message/send", post(message_controller::send_message))
+    }
 }

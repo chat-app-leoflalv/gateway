@@ -1,23 +1,18 @@
-pub struct MessageController {}
+use axum::Json;
+use serde_json::{json, Value};
 
-impl MessageController {
-    pub fn new() -> Self {
-        MessageController {}
-    }
+pub async fn get_messages() -> Json<Value> {
+    Json(json!({ "data": "get_messages" }))
+}
 
-    pub fn get_messages(&self) {
-        todo!()
-    }
+pub async fn send_message() -> Json<Value> {
+    Json(json!({ "data": "send_message" }))
+}
 
-    pub fn send_message(&self) {
-        todo!()
-    }
+pub async fn delete_message() -> Json<Value> {
+    Json(json!({ "data": "delete_message" }))
+}
 
-    pub fn delete_message(&self) {
-        todo!()
-    }
-
-    pub fn edit_message(&self) {
-        todo!()
-    }
+pub async fn edit_message() -> Json<Value> {
+    Json(json!({ "data": "edit_message" }))
 }
