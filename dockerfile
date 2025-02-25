@@ -5,4 +5,6 @@ COPY . .
 
 RUN cargo install --path .
 
-EXPOSE 3001
+RUN cargo install cargo-watch
+
+EXPOSE 3000

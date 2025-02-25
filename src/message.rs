@@ -3,6 +3,7 @@ use axum::{
     Router,
 };
 
+mod dtos;
 mod message_controller;
 
 pub trait MessageRouterExt {
