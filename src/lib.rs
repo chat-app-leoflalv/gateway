@@ -2,6 +2,7 @@ use axum::Router;
 use message::MessageRouterExt;
 
 pub mod config;
+pub mod core;
 
 mod message;
 

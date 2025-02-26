@@ -5,6 +5,8 @@ edition = "2021"
 
 [dependencies]
 anyhow = "1.0.96"
+async-nats = "0.39.0"
+async-trait = "0.1.86"
 axum = "0.8.1"
 dotenv = "0.15.0"
 serde = { version = "1.0.218", features = ["derive"] }
