@@ -11,7 +11,7 @@ pub struct NatsTransport {
 
 #[async_trait]
 impl Transport for NatsTransport {
-    async fn connect(server: &str) -> anyhow::Result<Self, anyhow::Error> {
+    async fn connect(server: &str) -> anyhow::Result<Self> {
         let client = async_nats::connect(server).await?;
 
         Ok(NatsTransport { client })
@@ -35,5 +35,17 @@ impl Transport for NatsTransport {
         let response_value = serde_json::from_slice::<R>(&response_bytes.payload)?;
 
         Ok(Json(response_value))
+    }
+
+    async fn emit<P>(&self, pattern: &'static str, payload: &Json<P>) -> anyhow::Result<()>
+    where
+        P: Serialize + Send + Sync,
+    {
+        let serialized_payload = serde_json::to_vec(&payload.0)?;
+        self.client
+            .publish(pattern, Bytes::from(serialized_payload))
+            .await?;
+
+        Ok(())
     }
 }
