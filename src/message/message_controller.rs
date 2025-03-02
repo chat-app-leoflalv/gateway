@@ -1,13 +1,23 @@
-use axum::{extract::Path, http::StatusCode, response::IntoResponse, Json};
+use axum::{
+    extract::{Path, State},
+    http::StatusCode,
+    response::IntoResponse,
+    Json,
+};
 use serde_json::json;
 use uuid::Uuid;
+
+use crate::{core::transport::Transport, GatewayState};
 
 use super::dtos::{
     edit_message_request_dto::EditMessageRequestDto,
     send_message_request_dto::SendMessageRequestDto,
 };
 
-pub async fn get_messages(Path(user_id): Path<Uuid>) -> Result<impl IntoResponse, StatusCode> {
+pub async fn get_messages<T: Transport>(
+    State(_state): State<GatewayState<T>>,
+    Path(user_id): Path<Uuid>,
+) -> Result<impl IntoResponse, StatusCode> {
     Ok(Json(json!({ "data": user_id.to_string() })))
 }
 

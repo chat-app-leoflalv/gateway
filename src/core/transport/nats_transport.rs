@@ -5,6 +5,7 @@ use serde::{de::DeserializeOwned, Serialize};
 
 use super::Transport;
 
+#[derive(Clone, Debug)]
 pub struct NatsTransport {
     client: Client,
 }

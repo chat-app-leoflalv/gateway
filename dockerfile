@@ -7,4 +7,6 @@ RUN cargo install --path .
 
 RUN cargo install cargo-watch
 
+RUN cargo build
+
 EXPOSE 3000

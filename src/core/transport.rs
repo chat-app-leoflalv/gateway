@@ -8,7 +8,7 @@ pub mod nats_transport;
 pub trait Transport {
     async fn connect(server: &str) -> anyhow::Result<Self>
     where
-        Self: Sized;
+        Self: Sized + Clone;
 
     async fn request<P, R>(
         &self,
