@@ -21,19 +21,24 @@ pub async fn get_messages<T: Transport>(
     Ok(Json(json!({ "data": user_id.to_string() })))
 }
 
-pub async fn send_message(
+pub async fn send_message<T: Transport>(
+    State(_state): State<GatewayState<T>>,
     Json(body): Json<SendMessageRequestDto>,
 ) -> Result<impl IntoResponse, StatusCode> {
     Ok(Json(json!({ "body": body })))
 }
 
-pub async fn delete_message(Path(message_id): Path<Uuid>) -> Result<impl IntoResponse, StatusCode> {
+pub async fn delete_message<T: Transport>(
+    State(_state): State<GatewayState<T>>,
+    Path(message_id): Path<Uuid>,
+) -> Result<impl IntoResponse, StatusCode> {
     Ok(Json(
         json!({ "data": "delete_message", "message_id": message_id.to_string() }),
     ))
 }
 
-pub async fn edit_message(
+pub async fn edit_message<T: Transport>(
+    State(_state): State<GatewayState<T>>,
     Path(message_id): Path<Uuid>,
     Json(body): Json<EditMessageRequestDto>,
 ) -> Result<impl IntoResponse, StatusCode> {
