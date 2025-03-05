@@ -11,14 +11,22 @@ use crate::{core::transport::Transport, GatewayState};
 
 use super::dtos::{
     edit_message_request_dto::EditMessageRequestDto,
+    get_message_payload::GetMessageResponsePayload,
     send_message_request_dto::SendMessageRequestDto,
 };
 
 pub async fn get_messages<T: Transport>(
-    State(_state): State<GatewayState<T>>,
+    State(state): State<GatewayState<T>>,
     Path(user_id): Path<Uuid>,
 ) -> Result<impl IntoResponse, StatusCode> {
-    Ok(Json(json!({ "data": user_id.to_string() })))
+    // message.get_messages
+    let response: Json<GetMessageResponsePayload> = state
+        .client
+        .request("message.get_messages", &Json(json!({"data": "test"})))
+        .await
+        .unwrap();
+
+    Ok(response)
 }
 
 pub async fn send_message<T: Transport>(
