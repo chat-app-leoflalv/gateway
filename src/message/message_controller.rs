@@ -19,7 +19,6 @@ pub async fn get_messages<T: Transport>(
     State(state): State<GatewayState<T>>,
     Path(user_id): Path<Uuid>,
 ) -> Result<impl IntoResponse, StatusCode> {
-    // message.get_messages
     let response: Json<GetMessageResponsePayload> = state
         .client
         .request("message.get_messages", &Json(json!({"data": "test"})))
